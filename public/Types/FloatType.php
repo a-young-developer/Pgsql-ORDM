@@ -6,7 +6,7 @@ namespace Cable\Ordm\Types;
  * Class FloatType
  * @package Cable\Ordm\Types
  */
-class FloatType extends Type
+final class FloatType extends Type
 {
 
 

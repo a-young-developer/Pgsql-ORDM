@@ -1,15 +1,13 @@
 <?php
-
 namespace Cable\Ordm\Types;
 
 /**
- * Class Bigint
+ * Class Jsonb
  * @package Cable\Ordm\Types
  */
-final class Bigint extends Integer
+class Jsonb extends JsonType
 {
-
-    protected $name = 'bigint';
+    protected $name = 'jsonb';
 
     // do nothing
 }

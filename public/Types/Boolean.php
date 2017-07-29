@@ -6,7 +6,7 @@ namespace Cable\Ordm\Types;
  * Class Boolean
  * @package Cable\Ordm\Types
  */
-class Boolean extends Type
+final class Boolean extends Type
 {
 
 
