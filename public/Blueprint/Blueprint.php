@@ -2,14 +2,10 @@
 
 namespace Cable\Ordm\Blueprint;
 
-use Cable\Ordm\Types\Bigint;
-use Cable\Ordm\Types\Char;
-use Cable\Ordm\Types\Jsonb;
-use Cable\Ordm\Types\JsonType;
-use Cable\Ordm\Types\Text;
+use Cable\Ordm\Exceptions\TypeNotExistsException;
+use Cable\Ordm\TypeBag;
 use Cable\Ordm\Types\Type;
-use Cable\Ordm\Types\Varchar;
-use Cable\Ordm\Types\Integer;
+
 
 final class Blueprint
 {
@@ -17,6 +13,35 @@ final class Blueprint
      * @var Column[]
      */
     private $columns;
+
+    /**
+     * @var array
+     */
+    private $typeBag;
+
+    /**
+     * Blueprint constructor.
+     * @param TypeBag $typeBag
+     */
+    public function __construct(TypeBag $typeBag)
+    {
+        $this->typeBag = $typeBag;
+    }
+
+    /**
+     * @param string $typeName
+     * @return mixed
+     * @throws TypeNotExistsException
+     */
+    public function getType(string $typeName){
+        if (!$this->typeBag->has($typeName)) {
+            throw new TypeNotExistsException(
+                sprintf('%s type not found', $typeName)
+            );
+        }
+
+        return $this->typeBag->get($typeName);
+    }
 
     /**
      * add a new varchar column
@@ -27,7 +52,7 @@ final class Blueprint
      */
     public function varchar(string $name, int $length){
         return $this->addColumn(
-            $name, new Varchar(), [$length]
+            $name, $this->getType('varchar'), [$length]
         );
     }
 
@@ -40,7 +65,7 @@ final class Blueprint
      */
     public function char(string $name, int $length){
         return $this->addColumn(
-            $name, new Char(), [$length]
+            $name, $this->getType('char'), [$length]
         );
     }
 
@@ -54,7 +79,7 @@ final class Blueprint
      */
     public function text(string $name, int $length){
         return $this->addColumn(
-            $name, new Text(), [$length]
+            $name, $this->getType('text'), [$length]
         );
     }
 
@@ -64,7 +89,7 @@ final class Blueprint
      */
     public function json(string $name){
         return $this->addColumn(
-            $name, new JsonType()
+            $name, $this->getType('json')
         );
     }
 
@@ -74,7 +99,7 @@ final class Blueprint
      */
     public function jsonb(string $name){
         return $this->addColumn(
-            $name, new Jsonb()
+            $name, $this->getType('jsonb')
         );
     }
 
@@ -85,7 +110,7 @@ final class Blueprint
      */
     public function int(string $name,int $length){
         return $this->addColumn(
-            $name, new Integer(), [$length]
+            $name, $this->getType('int'), [$length]
         );
     }
 
@@ -96,8 +121,74 @@ final class Blueprint
      */
     public function bigint(string $name, int $length){
         return $this->addColumn(
-            $name, new Bigint(), [$length]
+            $name, $this->getType('bigint'), [$length]
         );
+    }
+
+    /**
+     * @param string $name
+     * @param int $length
+     * @return Column
+     */
+    public function serial(string $name, int $length){
+        return $this->addColumn(
+            $name, $this->getType('serial'), [$length]
+        );
+    }
+
+    /**
+     * @param string $name
+     * @param int $length
+     * @return Column
+     */
+    public function smallSerial(string $name, int $length){
+        return $this->addColumn(
+            $name, $this->getType('smallserial'), [$length]
+        );
+    }
+
+    /**
+     * @param string $name
+     * @param int $length
+     * @return Column
+     */
+    public function bigSerial(string $name, int $length){
+        return $this->addColumn(
+            $name, $this->getType('bigserial'), [$length]
+        );
+    }
+
+    /**
+     * @param string $name
+     * @param int $precision
+     * @return Column
+     */
+    public function float(string $name, int $precision){
+        return $this->addColumn(
+            $name, $this->getType('float'), [$precision]
+        );
+    }
+
+    /**
+     * dynamic type
+     *
+     * @param $name
+     * @param $arguments
+     * @return Column
+     */
+    public function __call($name, $arguments)
+    {
+        if (!isset($arguments[0])) {
+            throw new \UnexpectedValueException(
+                'you must specify a name'
+            );
+        }
+
+        $n = $arguments[0];
+
+        unset($arguments[0]);
+
+        return $this->addColumn($n, $this->getType($name), $arguments);
     }
 
     /**
@@ -109,7 +200,4 @@ final class Blueprint
     public function addColumn(string $name, Type $type, array $parameters = []){
         return $this->columns[] = new Column($name, $parameters, $type);
     }
-
-
-
 }
