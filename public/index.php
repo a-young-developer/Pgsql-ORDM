@@ -2,24 +2,27 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 'On');
 ini_set('display_startup_errors', 'On');
-include "./vendor/autoload.php";
+$loader = include "./vendor/autoload.php";
 
-$types = [
-    \Cable\Ordm\Types\Integer::class,
-    \Cable\Ordm\Types\Varchar::class,
-    \Cable\Ordm\Types\Serial::class
-];
+use Cable\Ordm\Annotations\Table;
 
-$typeBag = new \Cable\Ordm\TypeBag($types);
+$container = \Cable\Container\Factory::create();
 
-$blueprint = new \Cable\Ordm\Blueprint\Blueprint($typeBag);
-
-$blueprint->varchar('username', 100)->notNull();
+$container->addProvider(new \Cable\Ordm\Annotations\AnnotationProvider());
 
 
-$alterTable = new \Cable\Ordm\Blueprint\Builder\UpdateTable(
-    "public.users"
-);
+/**
+ * Class Test
+ *
+ * @Table(name="test")
+ */
+class Test{
 
+}
 
-var_dump($alterTable->buildQuery($blueprint));
+$reader = new \Doctrine\Common\Annotations\AnnotationReader();
+
+$class = new ReflectionClass(new Test());
+
+$annotations = $reader->getClassAnnotations($class);
+var_dump($annotations);

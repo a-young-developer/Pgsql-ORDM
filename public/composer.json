@@ -17,6 +17,7 @@
     },
     "minimum-stability": "stable",
     "require": {
-        "cable/cable-annotations": "^1.0"
+        "doctrine/annotations": "1.4.0",
+        "cable/cable-container": "^1.2"
     }
 }

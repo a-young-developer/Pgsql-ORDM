@@ -1,20 +1,17 @@
 <?php
 namespace Cable\Ordm\Annotations;
 
-use Cable\Annotation\Command;
 
 /**
  * Class Table
  *
- * @Name("Table")
+ * @Annotation
  */
-class Table extends Command
+class Table
 {
 
     /**
-     * @Annotation()
-     *
-     * @Required()
+     * @var string
      */
     public $name;
 
