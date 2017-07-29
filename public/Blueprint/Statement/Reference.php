@@ -19,6 +19,6 @@ final class Reference extends Statement
      */
     public function __construct($table, $target)
     {
-        $this->setState(sprintf('REFERENCES %s (%s)', $this, $target));
+        $this->setState(sprintf('REFERENCES %s (%s)', $table, $target));
     }
 }

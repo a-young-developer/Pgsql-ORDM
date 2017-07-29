@@ -6,14 +6,14 @@ namespace Cable\Ordm\Blueprint\Statement;
 use Cable\Ordm\Blueprint\Statement;
 
 /**
- * Class ForeignKey
+ * Class Foreign
  * @package Cable\Ordm\Blueprint\Statement
  */
 final class ForeignKey extends Statement
 {
 
     /**
-     * ForeignKey constructor.
+     * Foreign constructor.
      * @param $from
      */
     public function __construct($from)

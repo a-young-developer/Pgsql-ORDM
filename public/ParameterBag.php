@@ -1,4 +1,5 @@
 <?php
+namespace Cable\Ordm;
 
 class ParameterBag
 {

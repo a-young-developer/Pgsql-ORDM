@@ -6,7 +6,10 @@ use Cable\Ordm\Exceptions\TypeNotExistsException;
 use Cable\Ordm\TypeBag;
 use Cable\Ordm\Types\Type;
 
-
+/**
+ * Class Blueprint
+ * @package Cable\Ordm\Blueprint
+ */
 final class Blueprint
 {
     /**
@@ -29,6 +32,24 @@ final class Blueprint
     }
 
     /**
+     * @return Column[]
+     */
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+
+    /**
+     * @param Column[] $columns
+     * @return Blueprint
+     */
+    public function setColumns(array $columns): Blueprint
+    {
+        $this->columns = $columns;
+        return $this;
+    }
+
+    /**
      * @param string $typeName
      * @return mixed
      * @throws TypeNotExistsException
@@ -43,6 +64,15 @@ final class Blueprint
         return $this->typeBag->get($typeName);
     }
 
+    /**
+     * @param string $name
+     * @return Blueprint
+     */
+    public function pk(string $name) : Column{
+        return $this->serial($name)
+            ->notNull()
+            ->primaryKey();
+    }
     /**
      * add a new varchar column
      *
@@ -127,34 +157,31 @@ final class Blueprint
 
     /**
      * @param string $name
-     * @param int $length
      * @return Column
      */
-    public function serial(string $name, int $length){
+    public function serial(string $name){
         return $this->addColumn(
-            $name, $this->getType('serial'), [$length]
+            $name, $this->getType('serial'), []
         );
     }
 
     /**
      * @param string $name
-     * @param int $length
      * @return Column
      */
-    public function smallSerial(string $name, int $length){
+    public function smallSerial(string $name){
         return $this->addColumn(
-            $name, $this->getType('smallserial'), [$length]
+            $name, $this->getType('smallserial'), []
         );
     }
 
     /**
      * @param string $name
-     * @param int $length
      * @return Column
      */
-    public function bigSerial(string $name, int $length){
+    public function bigSerial(string $name){
         return $this->addColumn(
-            $name, $this->getType('bigserial'), [$length]
+            $name, $this->getType('bigserial'), []
         );
     }
 

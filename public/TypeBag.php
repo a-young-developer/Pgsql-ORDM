@@ -7,7 +7,7 @@ use Cable\Ordm\Types\Type;
  * Class TypeBag
  * @package Cable\Ordm
  */
-final class TypeBag extends \ParameterBag
+final class TypeBag extends ParameterBag
 {
 
     /**
