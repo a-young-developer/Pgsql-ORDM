@@ -19,10 +19,7 @@ final class Column
      */
     private $type;
 
-    /**
-     * @var Statement[]
-     */
-    private $statements;
+
 
     /**
      * Column constructor.
