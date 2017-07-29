@@ -73,6 +73,7 @@ final class Blueprint
             ->notNull()
             ->primaryKey();
     }
+
     /**
      * add a new varchar column
      *

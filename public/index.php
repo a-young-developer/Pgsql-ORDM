@@ -14,17 +14,12 @@ $typeBag = new \Cable\Ordm\TypeBag($types);
 
 $blueprint = new \Cable\Ordm\Blueprint\Blueprint($typeBag);
 
-
-$what = $blueprint->int('test', 100)->default('10')
-    ->foreignKey('table_users_pk', 'accounts', ['id', 'user_id'])
-    ->onDeleteCascade()
-    ->onUpdateCascade();
-
 $blueprint->varchar('username', 100)->notNull();
-$blueprint->pk('id');
 
-$createTable = new \Cable\Ordm\Blueprint\Builder\CreateTable(
+
+$alterTable = new \Cable\Ordm\Blueprint\Builder\UpdateTable(
     "public.users"
 );
 
-var_dump($createTable->buildQuery($blueprint));
+
+var_dump($alterTable->buildQuery($blueprint));
