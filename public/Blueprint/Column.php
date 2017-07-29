@@ -15,6 +15,11 @@ final class Column
     private $name;
 
     /**
+     * @var array
+     */
+    private $parameters;
+
+    /**
      * @var Type
      */
     private $type;
@@ -26,12 +31,30 @@ final class Column
      * @param string  $name
      * @param Type $type
      */
-    public function __construct(string $name,Type $type)
+    public function __construct(string $name, array $parameters, Type $type)
     {
         $this->setName($name)
-            ->setType($type);
+            ->setType($type)
+            ->setParameters($parameters);
     }
 
+    /**
+     * @return array
+     */
+    public function getParameters(): array
+    {
+        return $this->parameters;
+    }
+
+    /**
+     * @param array $parameters
+     * @return Column
+     */
+    public function setParameters(array $parameters): Column
+    {
+        $this->parameters = $parameters;
+        return $this;
+    }
 
 
     /**
