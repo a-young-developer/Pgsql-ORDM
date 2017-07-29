@@ -1,0 +1,73 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+
+    memcached:
+      image: memcached:alpine
+      container_name: ordm-memcached
+
+    redis:
+      image: redis:alpine
+      container_name: ordm-redis
+
+    mysql:
+      image: mysql:8.0
+      container_name: ordm-mysql
+      working_dir: /application
+      volumes:
+        - .:/application
+      environment:
+        - MYSQL_ROOT_PASSWORD=sanane123
+        - MYSQL_DATABASE=docker
+        - MYSQL_USER=docker
+        - MYSQL_PASSWORD=sanane123
+
+    mariadb:
+      image: mariadb:10.1
+      container_name: ordm-mariadb
+      working_dir: /application
+      volumes:
+        - .:/application
+      environment:
+        - MYSQL_ROOT_PASSWORD=sanane123
+        - MYSQL_DATABASE=docker
+        - MYSQL_USER=docker
+        - MYSQL_PASSWORD=sanane123
+
+    postgres:
+      image: postgres:9.6-alpine
+      container_name: ordm-postgres
+      working_dir: /application
+      ports:
+        - "5432:5432"
+      volumes:
+        - .:/application
+      environment:
+        - POSTGRES_USER=root
+        - POSTGRES_PASSWORD=sanane123
+        - POSTGRES_DB=docker
+
+    elasticsearch:
+      image: elasticsearch:5.4-alpine
+      container_name: ordm-elasticsearch
+
+    webserver:
+      image: nginx:alpine
+      container_name: ordm-webserver
+      working_dir: /application
+      volumes:
+          - .:/application
+          - ./phpdocker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8000:80"
+
+    php-fpm:
+      build: phpdocker/php-fpm
+      container_name: ordm-php-fpm
+      working_dir: /application
+      volumes:
+        - .:/application
+        - ./phpdocker/php-fpm/php-ini-overrides.ini:/etc/php/7.0/fpm/conf.d/99-overrides.ini
+

@@ -1,0 +1,22 @@
+{
+    "name": "cableframework/ordm",
+    "description": "PostgreSQL Object relational documented mapping",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "A young deveoloper",
+            "email": "ayoungdevoloper@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Cable\\Ordm\\": "./"
+
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "cable/cable-annotations": "^1.0"
+    }
+}
