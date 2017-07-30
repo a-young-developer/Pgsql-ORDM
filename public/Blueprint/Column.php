@@ -1,12 +1,14 @@
 <?php
 namespace Cable\Ordm\Blueprint;
 use Cable\Ordm\Blueprint\Statement\Constraint;
+use Cable\Ordm\Blueprint\Statement\CreateIndex;
 use Cable\Ordm\Blueprint\Statement\DefaultStatement;
 use Cable\Ordm\Blueprint\Statement\Foreign;
 use Cable\Ordm\Blueprint\Statement\ForeignKey;
 use Cable\Ordm\Blueprint\Statement\NotNull;
 use Cable\Ordm\Blueprint\Statement\PrimaryKey;
 use Cable\Ordm\Blueprint\Statement\Reference;
+use Cable\Ordm\Blueprint\Statement\Index;
 use Cable\Ordm\Types\Type;
 
 /**
@@ -40,6 +42,12 @@ final class Column
      * @var array
      */
     private $constraints = [];
+
+
+    /**
+     * @var Index[]
+     */
+    private $indexes = [];
 
     /**
      * Column constructor.
@@ -144,6 +152,23 @@ final class Column
         return $this;
     }
 
+    /**
+     * @return Index[]
+     */
+    public function getIndexes(): array
+    {
+        return $this->indexes;
+    }
+
+    /**
+     * @param Index[] $indexes
+     * @return Column
+     */
+    public function setIndexes(array $indexes): Column
+    {
+        $this->indexes = $indexes;
+        return $this;
+    }
 
     /**
      * @param Statement $statement
@@ -181,6 +206,19 @@ final class Column
         $this->addStatement(new DefaultStatement($value));
 
         return $this;
+    }
+
+    /**
+     * @param string $table
+     * @return Index
+     */
+    public function index( string $table)
+    {
+        $statements = [
+            new CreateIndex($table)
+        ];
+
+        return $this->indexes[] = (new Index($statements))->setColumn($this);
     }
 
     /**

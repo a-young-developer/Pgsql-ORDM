@@ -81,7 +81,7 @@ final class Blueprint
      * @param int $length
      * @return Column
      */
-    public function varchar(string $name, int $length){
+    public function varchar(string $name, int $length = 255){
         return $this->addColumn(
             $name, $this->getType('varchar'), [$length]
         );
@@ -94,7 +94,7 @@ final class Blueprint
      * @param int $length
      * @return Column
      */
-    public function char(string $name, int $length){
+    public function char(string $name, int $length = 255){
         return $this->addColumn(
             $name, $this->getType('char'), [$length]
         );
@@ -108,7 +108,7 @@ final class Blueprint
      * @param int $length
      * @return Column
      */
-    public function text(string $name, int $length){
+    public function text(string $name, int $length = 255){
         return $this->addColumn(
             $name, $this->getType('text'), [$length]
         );
@@ -139,7 +139,7 @@ final class Blueprint
      * @param int $length
      * @return Column
      */
-    public function int(string $name,int $length){
+    public function int(string $name,int $length = 255){
         return $this->addColumn(
             $name, $this->getType('int'), [$length]
         );
@@ -150,7 +150,7 @@ final class Blueprint
      * @param int $length
      * @return Column
      */
-    public function bigint(string $name, int $length){
+    public function bigint(string $name, int $length = 255){
         return $this->addColumn(
             $name, $this->getType('bigint'), [$length]
         );

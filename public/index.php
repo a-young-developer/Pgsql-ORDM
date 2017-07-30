@@ -4,25 +4,20 @@ ini_set('display_errors', 'On');
 ini_set('display_startup_errors', 'On');
 $loader = include "./vendor/autoload.php";
 
-use Cable\Ordm\Annotations\Table;
 
-$container = \Cable\Container\Factory::create();
+$typeBag = new \Cable\Ordm\TypeBag(array(
+    \Cable\Ordm\Types\Varchar::class
+));
 
-$container->addProvider(new \Cable\Ordm\Annotations\AnnotationProvider());
+
+$blueprint = new \Cable\Ordm\Blueprint\Blueprint($typeBag);
+
+$blueprint->varchar('username')
+    ->index('users')
+    ->engine(['GIN', 'JSONB_PATH_OPS']);
 
 
-/**
- * Class Test
- *
- * @Table(name="test")
- */
-class Test{
+$createIndex = new \Cable\Ordm\Blueprint\Builder\CreateIndex();
 
-}
 
-$reader = new \Doctrine\Common\Annotations\AnnotationReader();
-
-$class = new ReflectionClass(new Test());
-
-$annotations = $reader->getClassAnnotations($class);
-var_dump($annotations);
+var_dump($createIndex->buildQuery($blueprint));
