@@ -27,6 +27,26 @@ class PhpFilesIterator implements IteratorInterface
     }
 
     /**
+     * @return array
+     */
+    public function getIgnoreFiles(): array
+    {
+        return $this->ignoreFiles;
+    }
+
+    /**
+     * @param array $ignoreFiles
+     * @return PhpFilesIterator
+     */
+    public function setIgnoreFiles(array $ignoreFiles): PhpFilesIterator
+    {
+        $this->ignoreFiles = $ignoreFiles;
+        return $this;
+    }
+
+
+
+    /**
      * @return \SplObjectStorage
      */
     public function iterate()

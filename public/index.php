@@ -18,11 +18,12 @@ $blueprint->varchar('username')
 
 */
 
-$iterator = new \Cable\Ordm\Iterator\PhpFilesIterator(__DIR__);
+$iterator = new \Cable\Ordm\Iterator\PhpFilesIterator(__DIR__.'/Annotations');
 
+$iterator->setIgnoreFiles(array(
+    'AnnotationProvider.php'
+));
 
 $files = $iterator->iterate();
 
-$mapper = new \Cable\Ordm\Mapper\FileMapper('Cable\Ordm');
-
-var_dump($mapper->mapFile($files));
+$mapper = new \Cable\Ordm\Mapper\FileMapper('Cable\Ordm\Annotations');
