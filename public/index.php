@@ -4,7 +4,7 @@ ini_set('display_errors', 'On');
 ini_set('display_startup_errors', 'On');
 $loader = include "./vendor/autoload.php";
 
-
+/*
 $typeBag = new \Cable\Ordm\TypeBag(array(
     \Cable\Ordm\Types\Varchar::class
 ));
@@ -16,8 +16,6 @@ $blueprint->varchar('username')
     ->index('users')
     ->engine(['GIN', 'JSONB_PATH_OPS']);
 
+*/
 
-$createIndex = new \Cable\Ordm\Blueprint\Builder\CreateIndex();
 
-
-var_dump($createIndex->buildQuery($blueprint));

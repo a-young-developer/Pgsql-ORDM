@@ -214,7 +214,7 @@ final class Column
      */
     public function index( string $table)
     {
-        return $this->indexes[] = (new Index())->setTabke($table)->setColumn($this);
+        return $this->indexes[] = (new Index())->setTable($table)->setColumn($this);
     }
 
     /**

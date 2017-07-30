@@ -24,6 +24,10 @@ class AnnotationProvider extends ServiceProvider
      */
     public function register()
     {
-        AnnotationRegistry::registerFile(__DIR__.'/Annotations.php');
+        $loader = new Loader();
+
+        $loader->addPrefix('Cable\Ordm\Annotations\\', __DIR__);
+
+        AnnotationRegistry::registerLoader([$loader, 'loadClass']);
     }
 }
