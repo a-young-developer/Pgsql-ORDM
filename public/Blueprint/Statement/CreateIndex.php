@@ -15,10 +15,10 @@ class CreateIndex extends Statement
      * CreateIndex constructor.
      * @param string $table
      */
-    public function __construct(string $table)
+    public function __construct(string $table, string $column)
     {
         $this->setState(
-            sprintf('CREATE INDEX ON `%s`', $table)
+            sprintf('CREATE INDEX ON `%s` (%s)', $table, $column)
         );
     }
 }

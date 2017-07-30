@@ -31,6 +31,7 @@ class CreateIndex implements BuilderInterface
 
 
             foreach ($indexes as $index){
+
                 $query .= (string) $index . ';';
             }
         }
