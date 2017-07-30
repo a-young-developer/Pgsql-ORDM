@@ -13,8 +13,8 @@ interface FileMapperInterface
     /**
      * map file by file info
      *
-     * @param SplFileInfo $file
+     * @param \SplObjectStorage$files
      * @return mixed
      */
-    public function mapFile(SplFileInfo $file);
+        public function mapFile(\SplObjectStorage $files);
 }

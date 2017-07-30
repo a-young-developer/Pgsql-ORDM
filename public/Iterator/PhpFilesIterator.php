@@ -11,24 +11,23 @@ class PhpFilesIterator implements IteratorInterface
      */
     private $basePath;
 
+
     /**
-     * @var FileMapperInterface
+     * @var array
      */
-    private $mapper;
+    private $ignoreFiles = [];
 
     /**
      * PhpFilesIterator constructor.
      * @param string $basePath
-     * @param FileMapperInterface $mapper
      */
-    public function __construct(string $basePath, FileMapperInterface $mapper)
+    public function __construct(string $basePath)
     {
         $this->basePath = $basePath;
-        $this->mapper = $mapper;
     }
 
     /**
-     * @return mixed
+     * @return \SplObjectStorage
      */
     public function iterate()
     {
@@ -36,9 +35,19 @@ class PhpFilesIterator implements IteratorInterface
         $iterator = new \RecursiveIteratorIterator($directory);
         $regex = new \RegexIterator($iterator, '/^.+\.php$/i');
 
+        $files = new \SplObjectStorage();
+
+
         foreach ($regex as $file){
-            $this->mapper->mapFile($file);
+
+            if(array_search($file->getFilename(), $this->ignoreFiles)){
+                continue;
+            }
+
+            $files->attach($file);
         }
+
+        return $files;
     }
 
     /**
